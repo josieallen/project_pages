@@ -26,5 +26,38 @@ To create the animation I created two div's with borders for the boxes. One with
 </div>
 ```
 
+This code will give you two boxes offset. 
+
 ![image of two squares](/img/squares.png) 
+
+To add the animation using tailwind I had to add custom animations in ```tailwind.config.js```.
+
+```
+theme: {
+    extend: {
+      animation: {
+        'spin-square-right': 'rotateright 3s ease-in-out 0s infinite alternate',
+        'spin-square-left': 'rotateleft 3s ease-in-out 0s infinite alternate',
+      },
+      keyframes:{
+        rotateright: {
+        '0%' :{ transform: 'rotate(0)'},
+        '25%' :{ transform: 'rotate(90deg)'},
+        '50%'  :{transform: 'rotate(180deg)'},
+        '75%' :{transform: 'rotate(270deg)'},
+        '100%' :{transform: 'rotate(360deg)'},
+        },
+        rotateleft: {
+          '0%' :{ transform: 'rotate(45)'},
+          '25%' :{ transform: 'rotate(-45deg)'},
+          '50%'  :{transform: 'rotate(-135deg)'},
+          '75%' :{transform: 'rotate(-225deg)'},
+          '100%' :{transform: 'rotate(-315deg)'},
+        }
+      } 
+    },
+  },
+```
+
+
 
