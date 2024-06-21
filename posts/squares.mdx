@@ -12,6 +12,8 @@ import SquareAnimation from '../../components/squares';
 I wanted to add some type of movement to my website. I wasn't sure what, but ended up deciding to
 keep it simple and add some animated squares on my homepage. I thought it fit my theme nicely. 
 
+### How it works? 
+
 To create the animation I created two div's with borders for the boxes. One with a rotation of 45 degrees so the squares will be offset from eachother. 
 
 ```
@@ -68,3 +70,9 @@ After adding these calls to my boxes I got the below results.
 
 <SquareAnimation />
 
+### Future additions? 
+
+Right now I don't have too much goin on in my ```tailwind.config``` so I am not too worried about 
+it being too full. If it does get a bit messy I will consolidate it to take out the animation portion.
+I would just have to take that out and use arbitrary values like ```animate-[rotateright 3s ease-in-out 0s infinite alternate]```
+instead of ```animate-spin-square-right```. 
