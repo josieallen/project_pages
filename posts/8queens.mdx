@@ -24,7 +24,18 @@ and selection.
 Fitness is a way to measure how good of mate an indivdual is. In my GA the ideal mate or solution to the queens problem 
 would be the score of 0. My fitness score is measured by how many queens attack eachother on the board. 
 For example on the board below. The 3rd row's ([0,1,2,3,4,5,6,7]) queen is getting attacked diagonally twice. 
-Then each of those queens is also attacking once.  Making the total fitness score 4. 
+Then each of those queens is also attacking once.  Making the total fitness score 4.  
+
+The genomes of the individuals look like this ```[2 5 7 1 0 3 6 4] ```. They are  represented by numbers 0-7 and each number can only be 
+used once. Each number represents the row the queen will be places in each coloumn. If the board were labeled 0-7 horizontally 
+and 0-7 vertically the top being 0 and bottom row being 7, then using the genome above:
+- Column 0 will have a queen in row 2. [2]
+- Column 1 will have a queen in row 5. [2 5]
+- Column 2 will have a queen in row 7. [2 5 7]
+- Column 3 will have a queen in row 1. [2 5 7 1] 
+- etc. 
+
+Each number represents the row it will be in the given column. 
 
 ```
 [2 5 7 1 0 3 6 4]
