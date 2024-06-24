@@ -1,29 +1,101 @@
 ---
 title: Eight Queens Problem 
-date: '18th April 2023'
+date: 'Spring 2023'
 description: Solving the 8 queens problem using computational biology. 
 cover: /img/8queens.png
 ---
 
+## What is the 8 queens problem? 
+
 The eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. 
+In chess a queen can attack vertically, horizontally or diagnolly.
+
 The image below shows a solution to the 8 queens problem.  
 
 ![example of 8 queens problem](/img/8queens.png)
 
-- It has all the markdown for easy writing.
-- It can have React components embedded into the markdown.
-- Each blog post folder is practically a website unto itself.
-- It can have scoped styles using filename.module.css in the blog post folder
-- It can have it's own layout using nested layouts.
-- Probably some other stuff too. Who knows.
+## How to solve this problem using a genetic algorithm? 
 
-## And this is a sub heading.
+To solve this problem I had to create a genetic algorithm(GA). 
+A genetic algorithm is an a way to solve a problem imitating biology, specifically, mutation, crossover,
+and selection. 
 
-Why?
+### Selection
+```
+def selection(population):
+  # array for 3 individual tourney
+  ind = []
 
-### Because we can!
+  tourney = 3
+  # add random individuals
+  for n in range(tourney):
+    ind.append(random.randint(0,pop_size - 1))
 
-That was a sub sub heading. The subbiest of sub headings, except for sub heading levels 4, 5, and 6.
+  min = 101
+  # fine best fit in tourney
+  for n in range(tourney):
+    if ind[n] < min:
+      min = ind[n]
 
-And a picture why not, they go in /public so we can access them at will. This one is in /public/blog/imagename.png.
 
+  # index space where best fitness is
+  return population[min]
+
+```
+
+### Crossover 
+```
+def crossover(ind1, ind2):
+  # get random crossover point not including the end points
+  point = random.randint(1,6)
+
+  # copy parent genomes to crossover
+  p1 = ind1.genome
+  p2 = ind2.genome
+
+  # empy array to place new crossed over genes
+  c1 = []
+  c2 = []
+
+  # Copy over array before crossover point
+  for x in range(point):
+    if (x <= point):
+      c1.append(p1[x])
+      c2.append(p2[x])
+
+  # start index at x-over point
+
+  # check if not in the array and crossover
+  # cycle to begining to maintain permutation
+  while(len(c1) < len(p1) or len(c2) < len(p2)):
+
+    if p2[point] not in c1 and len(c1) < len(p1):
+      c1.append(p2[point])
+    if p1[point] not in c2 and len(c2) < len(p2):
+      c2.append(p1[point])
+    point += 1
+    point = point % 8
+
+  # create individuals as children
+  child1 = individual()
+  child2 = individual()
+
+  # make the genome equal new childrens
+  child1.genome = c1
+  child2.genome = c2
+
+  # return two children
+  return child1, child2
+```
+### Mutation 
+```
+def mutate(self):
+    a = random.randint(0,7)
+    b = random.randint(0,7)
+
+    # swap variables
+    temp = self.genome[a]
+    self.genome[a] = self.genome[b]
+    self.genome[b] = temp
+```
+###Class Project: This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
