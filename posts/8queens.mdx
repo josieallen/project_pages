@@ -21,6 +21,7 @@ A genetic algorithm is an a way to solve a problem imitating biology, specifical
 and selection. 
 
 ### Fitness 
+
 Fitness is a way to measure how good of mate an indivdual is. In my GA the ideal mate or solution to the queens problem 
 would be the score of 0. My fitness score is measured by how many queens attack eachother on the board. 
 For example on the board below. The 3rd row's ([0,1,2,3,4,5,6,7]) queen is getting attacked diagonally twice. 
@@ -36,6 +37,9 @@ and 0-7 vertically the top being 0 and bottom row being 7, then using the genome
 - etc. 
 
 Each number represents the row it will be in the given column. 
+
+Setting up my genomes this way allows me to make sure each column and each row only has one queen. 
+Attacks can only happen diagonally. 
 
 ```
 [2 5 7 1 0 3 6 4]
@@ -65,6 +69,7 @@ def fitness_score(self):
 ```
 
 ### Selection
+
 Selection in nature is how animals find a mate. Typically out of the options given the animal would
 choose the best mate. Whether it is by the color of their fur, their stregth or if they are good hunters. 
 In order to simulate this in an algorithm and simulate the randomness of finding a good mate or not. 
@@ -102,7 +107,8 @@ Crossover in nature is the offspring. Think of the randomness of genes and how t
 can have a child with a mixture of genes. That is essentially crossover. In my case I am imitating sharing genes in a
 way that gets a random number 1-8 and swaps the genes. For example if ```11111111``` and ```00000000``` were to "mate" and have offspring. 
 My crossover algorithm will choose a random number 1-7, let's say it chose 3. The crossover point would be ```111|11111``` and ```000|00000```.Then after crossing over there will be two children ```11100000``` and ```00011111```. Since my genome has to be an array of 0,1,2,3,4,5,6,7. It is a bit tricky to make the crossover happen to not 
-have repeated numbers included which is why I used permutations. This will help solve the problem by making sure there is only one queen in each row. 
+have repeated numbers included which is why I used permutations. This will help solve the problem by making sure there is only one queen in each row by making sure there will be no 
+repeats.
 
 ```
 def crossover(ind1, ind2):
@@ -162,6 +168,89 @@ def mutate(self):
     temp = self.genome[a]
     self.genome[a] = self.genome[b]
     self.genome[b] = temp
+```
+
+### Individual
+
+Since this is a genetic algorithm we need "individuals" and genomes. In this case I created an individual class 
+where individuals each have a genome, a fitness score and can mutate itself if needed. 
+
+```
+class individual:
+  def __init__(self):
+    self.fitness = 0
+    self.genome = []
+    self.genome = np.random.permutation(8)
+
+    print(self.genome)
+    self.board = [[0 for i in range(genomesize)] for j in range(genomesize)]
+    self.print_board()
+    self.fitness_score()
+
+  def fitness_score(self):
+    self.fitness = 0
+    for col in range(genomesize):
+      for row in range(genomesize):
+        if(row != col):
+          x = abs(col - row)
+          y = abs(self.genome[col] - self.genome[row])
+          if( x == y ):
+            self.fitness += 1
+
+    print("Fitness Score: " + str(self.fitness))
+
+  def print_board(self):
+    print('\n' + "Queens Board")
+
+    # mark queens
+    for i in range(genomesize):
+      self.board[self.genome[i]][i] = 1
+
+    # print rows
+    for row in self.board:
+      print(row)
+
+
+  def mutate(self):
+    a = random.randint(0,7)
+    b = random.randint(0,7)
+
+    # swap variables
+    temp = self.genome[a]
+    self.genome[a] = self.genome[b]
+    self.genome[b] = temp
+```
+
+### Survival 
+This is a function that keeps the population at 100. So if two new children are created then two individuals 
+have to die. Think of it as natural selection. My survival function finds parents with ```selection()``` and
+uses those parents to get two children from ```crossover()```. Eachchild is given a 20% chance to mutate and 
+before adding new children the two worst individuals in the population have to die. 
+
+```
+def survival(population):
+
+  # find parents
+  p1 = selection(population)
+  p2 = selection(population)
+
+  # get children
+  c1 , c2 = crossover(p1,p2)
+
+  if random.random() < 0.2:
+    c1.mutate()
+  if random.random() < 0.2:
+    c2.mutate()
+
+  # removes worst 2 individuals from sorted population
+  population.pop()
+  population.pop()
+
+  # add children back to the population
+  population.append(c1)
+  population.append(c2)
+
+  return population
 ```
 
 ### This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
