@@ -21,6 +21,15 @@ A genetic algorithm is an a way to solve a problem imitating biology, specifical
 and selection. 
 
 ### Selection
+Selection in nature is how animals find a mate. Typically out of the options given the animal would
+choose the best mate. Whether it is by the color of their fur, their stregth or if they are good hunters. 
+In order to simulate this in an algorithm and simulate the randomness of finding a good mate or not. 
+
+I choose 3 random individuals from the population and have them fight in a tournment gladiator style and may the best mate win. 
+
+The best fit individual would then have the chance to mate and create offspring and hopefully create better fit 
+children.
+
 ```
 def selection(population):
   # array for 3 individual tourney
@@ -44,6 +53,13 @@ def selection(population):
 ```
 
 ### Crossover 
+
+Crossover in nature is the offspring. Think of the randomness of genes and how two different individuals 
+can have a child with a mixture of genes. That is essentially crossover. In my case I am imitating sharing genes in a
+way that gets a random number 1-8 and swaps the genes. For example if ```11111111``` and ```00000000``` were to "mate" and have offspring. 
+My crossover algorithm will choose a random number 1-7, let's say it chose 3. The crossover point would be ```111|11111``` and ```000|00000```.Then after crossing over there will be two children ```11100000``` and ```00011111```. Since my genome has to be an array of 0,1,2,3,4,5,6,7. It is a bit tricky to make the crossover happen to not 
+have repeated numbers included which is why I used permutations. This will help solve the problem by making sure there is only one queen in each row. 
+
 ```
 def crossover(ind1, ind2):
   # get random crossover point not including the end points
@@ -88,6 +104,11 @@ def crossover(ind1, ind2):
   return child1, child2
 ```
 ### Mutation 
+
+Mutation is to create random genes or new genes. This helps simulate evolution. Like fish getting an extra fin to swim faster. 
+
+In this case the mutation happens to the individual itself so swapping two random numbers within its own genes. 
+
 ```
 def mutate(self):
     a = random.randint(0,7)
@@ -98,4 +119,5 @@ def mutate(self):
     self.genome[a] = self.genome[b]
     self.genome[b] = temp
 ```
-###Class Project: This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
+
+### Class Project: This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
