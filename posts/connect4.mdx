@@ -2,7 +2,7 @@
 title: Connect Four 
 date: '18th April 2023'
 description: Playing connect 4 against an AI.
-cover: /img/8queens.png
+cover: /img/connect4.png
 ---
 
 ## What is connect four? 
@@ -21,6 +21,9 @@ and player two's is placed in row 2 and goes to the bottom.
  [1. 0. 2. 0. 0. 0. 0.]]
 ```
 
+## Making an AI to play connect 4 with. 
+
+![In the terminal version of connect 4](/img/connect4.png)
 ## Minimax Algorithm 
 
 The below pseudocode is from https://en.wikipedia.org/wiki/Minimax. 
@@ -64,4 +67,4 @@ function alphabeta(node, depth, α, β, maximizingPlayer) is
             β := min(β, value)
         return value
 ```
-![CDATribe Seal](/img/8queens.png)
+
