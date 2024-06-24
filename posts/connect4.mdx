@@ -5,23 +5,49 @@ description: Playing connect 4 against an AI.
 cover: /img/8queens.png
 ---
 
-# This is MDX! Stuff can happen here.
+## What is connect four? 
 
-- It has all the markdown for easy writing.
-- It can have React components embedded into the markdown.
-- Each blog post folder is practically a website unto itself.
-- It can have scoped styles using filename.module.css in the blog post folder
-- It can have it's own layout using nested layouts.
-- Probably some other stuff too. Who knows.
+## Minimax Algorithm 
 
-## And this is a sub heading.
+The below pseudocode is from https://en.wikipedia.org/wiki/Minimax. 
+```
+function minimax(node, depth, maximizingPlayer) is
+    if depth = 0 or node is a terminal node then
+        return the heuristic value of node
+    if maximizingPlayer then
+        value := −∞
+        for each child of node do
+            value := max(value, minimax(child, depth − 1, FALSE))
+        return value
+    else (* minimizing player *)
+        value := +∞
+        for each child of node do
+            value := min(value, minimax(child, depth − 1, TRUE))
+        return value
+```
+## Alpha-beta Pruning 
 
-Why?
+The following pseudocode is from https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning. 
 
-### Because we can!
-
-That was a sub sub heading. The subbiest of sub headings, except for sub heading levels 4, 5, and 6.
-
-And a picture why not, they go in /public so we can access them at will. This one is in /public/blog/imagename.png.
-
+```
+function alphabeta(node, depth, α, β, maximizingPlayer) is
+    if depth == 0 or node is terminal then
+        return the heuristic value of node
+    if maximizingPlayer then
+        value := −∞
+        for each child of node do
+            value := max(value, alphabeta(child, depth − 1, α, β, FALSE))
+            if value > β then
+                break (* β cutoff *)
+            α := max(α, value)
+        return value
+    else
+        value := +∞
+        for each child of node do
+            value := min(value, alphabeta(child, depth − 1, α, β, TRUE))
+            if value < α then
+                break (* α cutoff *)
+            β := min(β, value)
+        return value
+```
 ![CDATribe Seal](/img/8queens.png)
