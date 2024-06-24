@@ -254,7 +254,7 @@ def survival(population):
 ```
 ## Solution: 
 Since this is a GA, a solution is not guaranteed. The code below shows me putting all the above functions 
-and classes to use. 
+and classes to use. I iterated the population 1000. 
 
 ```
 # initialize varibales
@@ -298,15 +298,22 @@ for i in range(pop_iteration):
     print(bestFit[i], worstFit[i], aveFit[i])
 ```
 
-Average Fit
+### Average Fit
 
 ![Average Fit Graph](/img/ave_fit.png)
 
-Worst Fit 
+This does a great job of showing that the average fitness of the population is getting better after each generation. 
+
+### Worst Fit 
 
 ![Worst Fit Graph](/img/worst_fit.png)
 
-Best Fit 
+The worst individual in the population fluctuates alot. Which tells me my mutation function is 
+probably at too high of a percentage because my new individuals (children) are sometimes really bad individuals. 
+
+### Best Fit 
 
 ![Best Fit Graph](/img/best_fit.png)
+
+As you can see at about 180 iterations there is a solution that is found. 
 ### This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
