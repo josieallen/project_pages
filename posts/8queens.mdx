@@ -17,13 +17,13 @@ The image below shows a solution to the 8 queens problem.
 ## How to solve this problem using a genetic algorithm? 
 
 To solve this problem I had to create a genetic algorithm(GA). 
-A genetic algorithm is an a way to solve a problem imitating biology, specifically, mutation, crossover, fitness
+A genetic algorithm is a search algorithm that imitates biology, specifically, mutation, crossover, fitness
 and selection. 
 
 ### Fitness 
 
-Fitness is a way to measure how good of mate an indivdual is. In my GA the ideal mate or solution to the queens problem 
-would be the score of 0. My fitness score is measured by how many queens attack eachother on the board. 
+Fitness is a way to measure how "perfect" an indivdual is. In my GA the ideal individual or solution to the queens problem 
+would be a fitness score of 0. My fitness score is measured by how many queens attack eachother on the board. 
 For example on the board below. The 3rd row's ([0,1,2,3,4,5,6,7]) queen is getting attacked diagonally twice. 
 Then each of those queens is also attacking once.  Making the total fitness score 4.  
 
@@ -251,6 +251,51 @@ def survival(population):
   population.append(c2)
 
   return population
+```
+##Solution: 
+Since this is a GA, a solution is not guaranteed. The code below shows me putting all the above functions 
+and classes to use. 
+
+```
+# initialize varibales
+
+pop_size = 100
+population = []
+pop_iteration = 1000
+
+bestFit = []
+worstFit = []
+aveFit = []
+
+# initialize population
+for i in range(pop_size):
+  population.append(individual())
+
+# sort initial pop
+population.sort(key=lambda x: x.fitness)
+
+
+# iterate generationally
+for i in range(pop_iteration):
+  population = survival(population)
+  population.sort(key=lambda x: x.fitness)
+
+  bestFit.append(population[0].fitness)
+  worstFit.append(population[pop_size - 1].fitness)
+
+  totalsum = 0
+  for x in range(pop_size):
+    totalsum += population[x].fitness
+
+  average = totalsum/pop_size
+  aveFit.append(average)
+
+  if i == 0:
+    print("initial Generation")
+    print(bestFit[i], worstFit[i], aveFit[i])
+  if i == pop_size - 1:
+    print("Final Generation")
+    print(bestFit[i], worstFit[i], aveFit[i])
 ```
 
 ### This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
