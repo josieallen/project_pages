@@ -23,8 +23,13 @@ and player two's is placed in row 2 and goes to the bottom.
 
 ## Making an AI to play connect 4 with. 
 
+To keep this relatively simple I am not using any graphics and playing in the terminal. 
+The player goes first and the computer goes next. To make the computer "smarter" and not just choose 
+random columns. I will implement minimax algorithm and alpha beta pruning. 
+
 ![In the terminal version of connect 4](/img/connect4.png)
-## Minimax Algorithm 
+
+### Minimax Algorithm 
 
 The below pseudocode is from https://en.wikipedia.org/wiki/Minimax. 
 ```
@@ -42,7 +47,7 @@ function minimax(node, depth, maximizingPlayer) is
             value := min(value, minimax(child, depth − 1, TRUE))
         return value
 ```
-## Alpha-beta Pruning 
+### Alpha-beta Pruning 
 
 The following pseudocode is from https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning. 
 
