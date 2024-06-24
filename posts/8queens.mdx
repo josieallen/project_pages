@@ -17,8 +17,41 @@ The image below shows a solution to the 8 queens problem.
 ## How to solve this problem using a genetic algorithm? 
 
 To solve this problem I had to create a genetic algorithm(GA). 
-A genetic algorithm is an a way to solve a problem imitating biology, specifically, mutation, crossover,
+A genetic algorithm is an a way to solve a problem imitating biology, specifically, mutation, crossover, fitness
 and selection. 
+
+### Fitness 
+Fitness is a way to measure how good of mate an indivdual is. In my GA the ideal mate or solution to the queens problem 
+would be the score of 0. My fitness score is measured by how many queens attack eachother on the board. 
+For example on the board below. The 3rd row's ([0,1,2,3,4,5,6,7]) queen is getting attacked diagonally twice. 
+Then each of those queens is also attacking once.  Making the total fitness score 4. 
+
+```
+[2 5 7 1 0 3 6 4]
+
+Queens Board
+[0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1]
+[0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 1, 0, 0, 0, 0, 0]
+Fitness Score: 4
+```
+
+```
+def fitness_score(self):
+    self.fitness = 0
+    for col in range(genomesize):
+      for row in range(genomesize):
+        if(row != col):
+          x = abs(col - row)
+          y = abs(self.genome[col] - self.genome[row])
+          if( x == y ):
+            self.fitness += 1
+```
 
 ### Selection
 Selection in nature is how animals find a mate. Typically out of the options given the animal would
@@ -120,4 +153,4 @@ def mutate(self):
     self.genome[b] = temp
 ```
 
-### Class Project: This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
+### This project was an assignment for my Evolutionary Computation : DNA Sequencing course. 
