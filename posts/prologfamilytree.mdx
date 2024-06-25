@@ -1,0 +1,99 @@
+### Prolog Knowledge Base
+
+```
+father(F, Y) :-
+   male(F),
+   parent(F, Y).
+
+mother(M,Y) :-
+   female(M),
+   parent(M,Y).
+
+grandfather(G, Y) :- 
+   male(G),
+   parent(G, P),
+   parent(P, Y).
+   
+grandmother(G, Y) :-
+   female(G),
+   parent(G, P),
+   parent(P, Y).
+
+sister(X,Y) :-
+   female(X),
+   parent(P,X),
+   parent(P,Y),
+   =\=(X, Y).
+
+brother(X, Y) :-
+   male(X), 
+   parent(P, X),
+   parent(P, Y),
+  =\=(X,Y).
+
+aunt(A,Y) :-
+  female(A),
+  parent(P,Y),
+  sister(A,P).
+
+uncle(U,Y) :-
+  male(U),
+  parent(P,Y), 
+  brother(U, P).
+
+ancestor(A,Y) :- 
+   parent(Z, Y),
+   ancestor(A, Z).
+
+```
+
+
+```
+male(al).      
+male(carl).    
+male(ed).      
+male(frank).   
+male(duncan).
+male(kurt).     
+male(rene).    
+male(vinny).    
+male(tony).
+
+female(berta).  
+female(dora).  
+female(tina).  
+female(deb).   
+female(jane).
+female(laura).  
+female(mia).   
+female(olga).  
+female(wendy).  
+female(susan).
+female(linda).
+
+parent(al,tdeb).   
+parent(al,duncan).   
+parent(carl,deb).   
+parent(carl,jane).
+parent(ed,kurt).    
+parent(frank,mia).  
+parent(frank,olga). 
+parent(duncan,wendy).
+parent(duncan,rene).  
+parent(duncan,vinny).  
+parent(kurt,tony).  
+parent(kurt,linda).    
+
+parent(berta,tdeb). 
+parent(berta,hugo). 
+parent(dora,deb).   
+parent(dora,jane).
+parent(tina,mia).   
+parent(tina,olga).  
+parent(deb,wendy).   
+parent(deb,rene).
+parent(deb,vinny).   
+parent(jane,susan). 
+parent(laura,tony). 
+parent(laura,linda).
+```
