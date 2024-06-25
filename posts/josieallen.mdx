@@ -11,10 +11,6 @@ I wanted to create a website since having some sort of portfolio is considered t
 in today's job market. I wanted to showcase some things I work on for future employers and 
 also friends and family when they ask me what I work on. 
 
-## Design Theme 
-
-My theme is very basic and straight forward. I went with this theme to keep it as simple as 
-possible while also showcasing my projects. [Definitely not my lacking artistic skills.] 
 
 ## How I built this site: 
 
@@ -42,11 +38,23 @@ To deploy this site I used [Vercel](https://vercel.com/home " Vercel Website"). 
 your account you can deploy your website by connecting your github repo. Whenever I push to my 
 repo the site will redeploy with my new additions. 
 
+## Design Theme 
+
+My theme is very basic and straight forward. I went with this theme to keep it as simple as 
+possible while also showcasing my projects. [Definitely not my lacking artistic skills.] 
+
+I used tailwindcss to style this site. I think the trickiest part of the styling was utilizing prose 
+and breaking ```prose``` when I did not want to use prose. When I created the dark/light theme button 
+I had to figure out how to make prose invert too. Crazy that there is a  ```prose-invert``` call. 
+
 ## Using MDX for project pages. 
 
 I am dynamically getting all my project pages[MDX files] from a github repo. 
 Each project has its own page and the front matter is used to make the index page cards. 
 The rest of the mdx page is the content. That is what is on the page after you click on the cards. 
+
+This will be awesome if I ever want to create a new site and all my content is already in a repo. Not directly in
+the site itself. 
 
 ## Future additions. 
 - I want to dynamically get all my images and not just the mdx files from a github repo. 
