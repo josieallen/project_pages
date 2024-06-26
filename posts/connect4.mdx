@@ -5,6 +5,8 @@ description: Playing connect 4 against an AI.
 cover: /img/connect4.png
 ---
 
+import ConnectFour from '../../components/connect4';
+
 ## What is connect four? 
 Connect Four is a game where two players take turns placing coins in a 6 x 7 game board. The 
 first player to get their coins 4 in a row wins. They can get 4 in a row horizontally, 
@@ -74,6 +76,8 @@ function alphabeta(node, depth, α, β, maximizingPlayer) is
         return value
 ```
 ## Solution 
+
+<ConnectFour/>
 
 [Google Colab Link](https://colab.research.google.com/drive/1ck1YOdInzahR37Hg9YdxUoO8V6aitd8A?usp=sharing "Check out the code")
 
