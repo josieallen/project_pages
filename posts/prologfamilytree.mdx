@@ -6,21 +6,27 @@ cover: /img/prologQ1.png
 ---
 
 
-### ABSTRACT: 
+### Overview: 
 
-I wrote a relational knowledge base in prolog. The program sets up rules for family members such as:  mother, father, brother, sister, grandma, grandpa, aunt, uncle and ancestor. The goal of the program is to be able to query the knowledge base and it correctly tell us relational facts. 
+I wrote a relational knowledge base in prolog. The program sets up rules for family members 
+such as:  mother, father, brother, sister, grandma, grandpa, aunt, uncle and ancestor. The 
+goal of the program is to be able to query the knowledge base and it correctly tell us relational facts. 
+
+### Prolog Language: 
+
+Prolog is a LOGical PROgraming language. It is based on facts and rules. Rules being the 
+prolog functions and facts being the truth you tell it. 
 
 ### SYNTAX DESCRIPTION: 
 
-My rules are set up as the image below. A father is a male and a parent. This would be used like `father(abraham, chance).` to create a fact that Abraham is the father to Chance. I have rules like this for all relations. 
-
-Father is a male and a parent. 
-
+My *rules* are set up as the image below. A father is a male and a parent. 
 ```
 father(F, Y) :-
    male(F),
    parent(F, Y).
 ```
+To create a *fact* that Abraham is the father to Chance you would say
+`father(abraham, chance).`. 
 
 
 ### Full Code and Knowledge base 
@@ -120,6 +126,11 @@ parent(jane,susan).
 parent(laura,tony). 
 parent(laura,linda).
 ```
+
+### Querying: 
+
+In order to query and compile this code I had to install [GNU Prolog](http://www.gprolog.org/ "prolog compiler").
+Like python you have to open the environment run your code and then you can query. 
 
 ### RESULTS:
 
