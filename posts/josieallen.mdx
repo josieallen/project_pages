@@ -17,17 +17,18 @@ also friends and family when they ask me what I work on.
 To create the Next.js app I used the this command  ```npx create-next-app@latest``` .
 When installed it will ask you the following questions: 
 ```
-What is your project named? my-app
-Would you like to use TypeScript? No / Yes
-Would you like to use ESLint? No / Yes
-Would you like to use Tailwind CSS? No / Yes
-Would you like to use `src/` directory? No / Yes
-Would you like to use App Router? (recommended) No / Yes
-Would you like to customize the default import alias (@/*)? No / Yes
+What is your project named? josieallen
+Would you like to use TypeScript? [ No ] / Yes
+Would you like to use ESLint? [ No ]/ Yes
+Would you like to use Tailwind CSS? No /[ Yes ]
+Would you like to use `src/` directory? No / [ Yes ]
+Would you like to use App Router? (recommended) No / [ Yes ]
+Would you like to customize the default import alias (@/*)? [ No ]/ Yes
 What import alias would you like configured? @/*
 ```
 
-Depending on your preferences you can choose what you want. More documentation is at 
+I added my responses to my specific project but depending on your preferences 
+you may choose differently. More documentation is at 
 [nextjs.org](https://nextjs.org/docs/getting-started/installation "next.js installation").
 
 After getting the intial site set up. I created a github repository. 
@@ -50,18 +51,71 @@ I had to figure out how to make prose invert too. Crazy that there is a  ```pros
 ## Using MDX for project pages. 
 
 I am dynamically getting all my project pages[MDX files] from a [github repo](https://github.com/sagewaviness/project_pages "my project pages repo"). 
-Each project has its own page and the front matter is used to make the index page cards. 
-The rest of the mdx page is the content. That is what is on the page after you click on the cards. 
+Each project has its own page and the front matter is used to make cards for the index page. 
+The rest of the mdx page is the content for each page. 
+
+In order to get this to work I used github api. You essentially have to set up a token in github. 
+You can do this by going to `Settings > Developer Settings > Personal Access Tokens > Tokens (classic)`. 
+Then copying that token and putting it in a `.env` file like `GITHUB_TOKEN=your_token`. 
+
+In my `/lib` folder I have a `github.js` file that gets the mdx files from the repo. 
+
+```
+import axios from 'axios';
+import matter from 'gray-matter';
+
+const GITHUB_API_URL = 'https://api.github.com';
+const REPO_OWNER = 'josieallen';
+const REPO_NAME = 'project_pages';
+const BRANCH = 'main'; 
+const DIRECTORY = 'posts';
+const TOKEN = process.env.GITHUB_TOKEN; //your token
+
+export async function fetchMdxFiles() {
+  const url = `${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DIRECTORY}?ref=${BRANCH}`;
+  const headers = {
+    Authorization: `token ${TOKEN}`,
+  };
+
+  try {
+    const response = await axios.get(url, { headers });
+
+    if (!Array.isArray(response.data)) {
+      throw new Error('Expected response data to be an array');
+    }
+
+    const files = response.data.filter(file => file.name.endsWith('.mdx'));
+
+    const mdxFiles = await Promise.all(
+      files.map(async file => {
+        const fileResponse = await axios.get(file.download_url, { headers });
+        const content = fileResponse.data;
+        const { data: frontMatter, content: mdxContent  } = matter(content);
+        return {
+          filename: file.name,
+          frontMatter,
+          content: mdxContent,
+        };
+      })
+    );
+
+    return mdxFiles;
+  } catch (error) {
+    console.error('Error fetching MDX files:', error.message);
+    throw error;
+  }
+}
+```
 
 This will be awesome if I ever want to create a new site and all my content is already in a repo. Not directly in
 the site itself. 
+
+* You need to install mdx gray-matter axios next-mdx-remote remark-frontmatter *
 
 ## Future additions. 
 - I want to dynamically get all my images and not just the mdx files from a github repo. 
 - Add more animations.
 - Themed pages for my projects. 
-- Favicon 
-- Figure out how to embed some code so users don't have to click on links to test out my code. (especially my connect four game). 
 - More content 
 - Tags for projects 
 - Breadcrumbs for project pages as more content is added.
