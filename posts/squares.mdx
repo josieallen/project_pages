@@ -8,7 +8,7 @@ tags: Animation, Front-End
 
 import SquareAnimation from '../../components/squares';
 
-***Tech Stack:*** Tailwindcss, Visual Studio Code, HTML. 
+***Tech Stack:*** Tailwindcss, Visual Studio Code, HTML, JavaScript. 
 
 ## Animated spinning squares using Tailwind CSS
 
@@ -74,9 +74,53 @@ After adding these calls to my boxes I got the below results.
 
 <SquareAnimation />
 
-### Alternatives? 
+### Four Spinning Squares 
+
+I reused the same code from the overlapping squares on these but instead of overlapping have them next to eachother. 
+```
+<div className="flex flex-grow justify-center items-center my-20 gap-5">
+          <div className="rotate-45 w-16 h-16 md:w-24 md:h-24  border-2 dark:border-white border-black animate-spin-square-left"></div>
+          <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-[#E6A297] animate-spin-square-right"></div>
+          <div className="rotate-45 w-16 h-16 md:w-24 md:h-24  border-2 dark:border-white border-black animate-spin-square-left"></div>
+          <div className="w-16 h-16 md:w-24 md:h-24 border-2 border-[#E6A297] animate-spin-square-right"></div>
+</div>
+```
+
+### The Animation Changes by Changing the Window Size. 
+
+To get this to work I had to use some javascript. It is checking if the window size is shrinking. 
+If the window size is shrinking it calls the big overlapping squares, otherwise it's the four 
+spinning square animation. 
+
+```
+const [width, setWidth] = useState(0);
+  const [isShrinking, setIsShrinking] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsShrinking(window.innerWidth < width);
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [width]);
+
+  return (
+    <>
+      {isShrinking ? <SquareAnimation /> : <TinySquares />}
+    </>
+  );
+```
+
+### Final Thoughts? 
 
 If `tailwind.config` gets a bit messy I would take out the animation portion and use arbitrary 
 values like `animate-[rotateright 3s ease-in-out 0s infinite alternate]` instead of `animate-spin-square-right`. 
 This could help consolidate the file some. I personally think it is cleaner to include the animation section. I 
 like the ease of use instead of using arbitrary values. 
+
+I want to add a few more animations eventually. 
